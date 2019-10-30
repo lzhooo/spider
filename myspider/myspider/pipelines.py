@@ -16,7 +16,7 @@ from scrapy import Item
 import pymongo
 import json
 import sys
-import settings
+# import settings
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
