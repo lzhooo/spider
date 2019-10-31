@@ -114,6 +114,8 @@ class bilibiliGCSpider(scrapy.Spider):
         for lis in hjson2['list'][0:10]:
             url = "https://api.bilibili.com/x/v1/dm/list.so?oid=" + str(lis['cid'])
             m = collection.find({'aid':str(lis['aid'])}).count()
+            if len(str(lis['title']).decode("utf-8")) > 100:
+                lis['title'] = str(lis['title']).decode("utf-8")[0:100] + "..."
             if(m):
                 collection.update({'aid':str(lis['aid'])},{"$set":{"play":str(lis['play']),"coins":str(lis['coins'])}})
             else:
