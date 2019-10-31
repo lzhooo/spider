@@ -61,7 +61,7 @@ class MyspiderPipeline(object):
                     collection.update({"title": post['title']}, {"$set": {"play": post['play'],"comment":post['comment']}})
                 else:
                     collection.insert_one(post)
-        if spider.name == 'bilibilitm' or spider.name == 'bilibilitm_yzye':
+        if spider.name == 'bilibilitm' or spider.name == 'bilibilitm_yzye' or spider.name == 'bilibilitm_gc':
             db = self.client[spider.name]
             post = dict(item) if isinstance(item, Item) else item
             if len(post['title']) > 100:
