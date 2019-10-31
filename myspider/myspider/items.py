@@ -40,7 +40,6 @@ class BilibiliTMItem(scrapy.Item):
     url = scrapy.Field()
     domain = scrapy.Field()
     spider = scrapy.Field()
-    title = scrapy.Field()
     aid = scrapy.Field()
     cid = scrapy.Field()
     tanmu = scrapy.Field()

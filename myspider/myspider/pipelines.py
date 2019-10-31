@@ -64,8 +64,8 @@ class MyspiderPipeline(object):
         if spider.name == 'bilibilitm' or spider.name == 'bilibilitm_yzye' or spider.name == 'bilibilitm_gc':
             db = self.client[spider.name]
             post = dict(item) if isinstance(item, Item) else item
-            collection = db[post['title']]
-            del post['title']
+            collection = db[post['aid']]
+            del post['aid']
             del post['url']
             del post['spider']
             del post['domain']

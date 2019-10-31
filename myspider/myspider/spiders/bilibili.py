@@ -114,13 +114,11 @@ class bilibiliGCSpider(scrapy.Spider):
         for lis in hjson2['list'][0:10]:
             url = "https://api.bilibili.com/x/v1/dm/list.so?oid=" + str(lis['cid'])
             m = collection.find({'aid':str(lis['aid'])}).count()
-            if len(str(lis['title']).decode("utf-8")) > 100:
-                lis['title'] = str(lis['title']).decode("utf-8")[0:100] + "..."
             if(m):
                 collection.update({'aid':str(lis['aid'])},{"$set":{"play":str(lis['play']),"coins":str(lis['coins'])}})
             else:
-                collection.insert({'aid':str(lis['aid']),"title": str(lis['title']), "author": str(lis['author']),"play":str(lis['play']),"coins":str(lis['coins']),'cid': str(lis['cid'])})
-            yield scrapy.Request(url=url, headers=headers, method='GET', callback=self.parse3,meta={'title': str(lis['title']),'cid': str(lis['cid']),'aid':str(lis['aid'])})
+                collection.insert({'aid':str(lis['aid']),"title": lis['title'], "author": str(lis['author']),"play":str(lis['play']),"coins":str(lis['coins']),'cid': str(lis['cid']),"jpg":"0"})
+            yield scrapy.Request(url=url, headers=headers, method='GET', callback=self.parse3,meta={'cid': str(lis['cid']),'aid':str(lis['aid'])})
         conn.close()
 
     def parse3(self, response):
@@ -129,7 +127,6 @@ class bilibiliGCSpider(scrapy.Spider):
         for ll in l:
             item = BilibiliTMItem()
             item["tanmu"] = ll
-            item["title"] = response.meta['title']
             item["aid"] = response.meta['aid']
             item["cid"] = response.meta['cid']
             yield item
